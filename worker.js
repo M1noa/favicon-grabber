@@ -277,78 +277,70 @@ const HTML_CONTENT = `<!DOCTYPE html>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Favicon Grabber</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; background: #f5f5f5; padding: 20px; }
-        .container { max-width: 800px; margin: 0 auto; background: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); overflow: hidden; }
-        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; }
-        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
-        .header p { opacity: 0.9; font-size: 1.1em; }
-        .main { padding: 40px; }
-        .input-group { margin-bottom: 30px; }
-        .input-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #555; }
-        .input-group input { width: 100%; padding: 12px 16px; border: 2px solid #ddd; border-radius: 6px; font-size: 16px; transition: border-color 0.3s; }
-        .input-group input:focus { outline: none; border-color: #667eea; }
-        .btn { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 12px 24px; border-radius: 6px; font-size: 16px; cursor: pointer; transition: transform 0.2s; }
-        .btn:hover { transform: translateY(-2px); }
-        .result { margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 6px; border-left: 4px solid #667eea; display: none; }
-        .result img { max-width: 64px; max-height: 64px; margin-right: 15px; vertical-align: middle; }
-        .docs { margin-top: 50px; padding-top: 30px; border-top: 2px solid #eee; }
-        .docs h2 { color: #333; margin-bottom: 20px; }
-        .endpoint { background: #f8f9fa; padding: 15px; border-radius: 6px; margin: 15px 0; font-family: 'Courier New', monospace; border-left: 4px solid #28a745; }
-        .example { background: #fff3cd; padding: 15px; border-radius: 6px; margin: 10px 0; border-left: 4px solid #ffc107; }
-        .feature { margin: 15px 0; padding-left: 20px; }
-        .feature::before { content: "✓"; color: #28a745; font-weight: bold; margin-left: -20px; margin-right: 10px; }
+        body {
+            line-height: 1.5;
+        }
+        
+        .main {
+            padding: 40px;
+        }
+        
+        .result img {
+            margin-top: 10px;
+            width: 128px;
+            height: 128px;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🔗 Favicon Grabber</h1>
-            <p>Robust favicon proxy service with intelligent fallback strategies</p>
-        </div>
         <div class="main">
             <div class="input-group">
-                <label for="url">Enter Website URL:</label>
                 <input type="text" id="url" placeholder="https://example.com or example.com" value="">
             </div>
-            <button class="btn" onclick="getFavicon()">Get Favicon</button>
+            
+            <button class="btn" onclick="getFavicon()">get</button>
+            
             <div class="result" id="result">
-                <strong>Favicon found:</strong><br>
                 <div id="favicon-display"></div>
                 <div id="api-url"></div>
             </div>
-            <div class="docs">
-                <h2>📚 API Documentation</h2>
-                <div class="endpoint">GET /api/favicon?url={website_url}</div>
-                <h3>Features:</h3>
-                <div class="feature">Supports HTTP and HTTPS URLs</div>
-                <div class="feature">Handles URLs with or without protocol</div>
-                <div class="feature">Multiple fallback strategies for maximum success rate</div>
-                <div class="feature">Returns raw favicon image data</div>
-                <div class="feature">Proper error handling and status codes</div>
-                <h3>Examples:</h3>
-                <div class="example"><strong>With HTTPS:</strong><br><code>/api/favicon?url=https://github.com</code></div>
-                <div class="example"><strong>Without protocol:</strong><br><code>/api/favicon?url=google.com</code></div>
-            </div>
+                
+                <div class="endpoint">
+                    GET /api/favicon?url={website_url}
+                </div>
+                
+                <ul>
+                    <li><strong>200 OK:</strong> Returns the favicon image (various formats: ICO, PNG, SVG, etc.)</li>
+                    <li><strong>404 Not Found:</strong> No favicon could be found</li>
+                    <li><strong>400 Bad Request:</strong> Invalid URL provided</li>
+                    <li><strong>500 Internal Server Error:</strong> Server error occurred</li>
+                </ul>
         </div>
-    </div>
+    
     <script>
         async function getFavicon() {
             const urlInput = document.getElementById('url');
             const result = document.getElementById('result');
             const faviconDisplay = document.getElementById('favicon-display');
             const apiUrl = document.getElementById('api-url');
+            
             const url = urlInput.value.trim();
-            if (!url) { alert('Please enter a URL'); return; }
+            if (!url) {
+                alert('Please enter a URL');
+                return;
+            }
+            
             result.style.display = 'none';
+            
             try {
                 const apiEndpoint = \`/api/favicon?url=\${encodeURIComponent(url)}\`;
                 const response = await fetch(apiEndpoint);
+                
                 if (response.ok) {
                     const blob = await response.blob();
                     const imageUrl = URL.createObjectURL(blob);
+                    
                     faviconDisplay.innerHTML = \`<img src="\${imageUrl}" alt="Favicon">\`;
-                    apiUrl.innerHTML = \`<br><strong>API URL:</strong> <code>\${apiEndpoint}</code>\`;
                     result.style.display = 'block';
                 } else {
                     alert(\`Error: \${response.status} - \${response.statusText}\`);
@@ -357,8 +349,12 @@ const HTML_CONTENT = `<!DOCTYPE html>
                 alert(\`Error: \${error.message}\`);
             }
         }
+        
+        // Allow Enter key to trigger search
         document.getElementById('url').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') { getFavicon(); }
+            if (e.key === 'Enter') {
+                getFavicon();
+            }
         });
     </script>
 </body>
