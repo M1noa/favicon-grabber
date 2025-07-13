@@ -1,4 +1,4 @@
-name = "favicon-grabber"
+name = "favicongrabber"
 main = "worker.js"
 compatibility_date = "2025-07-13"
 compatibility_flags = ["nodejs_compat"]
