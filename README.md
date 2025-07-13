@@ -26,6 +26,7 @@
 
 ## Live Versions
 [vercel version](https://favicon.minoa.cat/) (favicon-grabberr.vercel.app)
+
 [cloudflare workers version](https://favicon-cf.minoa.cat/) (favicongrabber.minoa.workers.dev)
 
 ---
