@@ -4,42 +4,12 @@
 
 ### Vercel Deployment
 
-1. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-
-2. **Local development:**
-   ```bash
-   npm run dev
-   ```
-
-3. **Deploy to Vercel:**
-   ```bash
-   npm run deploy
-   ```
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fm1noa%2Ffavicon-grabber&project-name=favicon-grabber&repository-name=favicon-grabber&demo-title=vefcel%20hosted%20version&demo-description=live%20version&demo-url=https%3A%2F%2Ffavicon.minoa.cat)
+(set build url to `npm run dev` and the install command to `npm install`)
 
 ### Cloudflare Workers Deployment
 
-1. **Install Wrangler CLI:**
-   ```bash
-   npm install -g wrangler
-   ```
-
-2. **Login to Cloudflare:**
-   ```bash
-   wrangler login
-   ```
-
-3. **Local development:**
-   ```bash
-   npm run wrangler:dev
-   ```
-
-4. **Deploy to Cloudflare:**
-   ```bash
-   npm run wrangler:deploy
-   ```
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/m1noa/favicon-grabber)
 
 ### Response Codes
 
@@ -50,17 +20,13 @@
 
 ## Performance
 
-- **Timeout**: 10-second request timeout
-- **Caching**: 24-hour browser cache
-- **Fallbacks**: Up to 11 different favicon locations tested
-- **Validation**: Image signature verification prevents false positives
+- 10-second timeout
+- 24-hour browser cache
+- 11 different favicon locations to grab from
 
-## Security
-
-- CORS headers properly configured
-- User-Agent spoofing for better compatibility
-- Input validation and sanitization
-- No sensitive data exposure
+## Live Versions
+[vercel version](https://favicon.minoa.cat/) (favicon-grabberr.vercel.app)
+[cloudflare workers version](https://favicon-cf.minoa.cat/) (favicongrabber.minoa.workers.dev)
 
 ---
 
