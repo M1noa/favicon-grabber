@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favicon Grabber</title>
+    <style>
+        body {
+            line-height: 1.5;
+        }
+        
+        .main {
+            padding: 40px;
+        }
+        
+        .result img {
+            margin-top: 10px;
+            width: 128px;
+            height: 128px;
+        }
+    </style>
+</head>
+<body>
+        <div class="main">
+            <div class="input-group">
+                <input type="text" id="url" placeholder="https://example.com or example.com" value="">
+            </div>
+            
+            <button class="btn" onclick="getFavicon()">get</button>
+            
+            <div class="result" id="result">
+                <div id="favicon-display"></div>
+                <div id="api-url"></div>
+            </div>
+                
+                <div class="endpoint">
+                    GET /api/favicon?url={website_url}
+                </div>
+                
+                <ul>
+                    <li><strong>200 OK:</strong> Returns the favicon image (various formats: ICO, PNG, SVG, etc.)</li>
+                    <li><strong>404 Not Found:</strong> No favicon could be found</li>
+                    <li><strong>400 Bad Request:</strong> Invalid URL provided</li>
+                    <li><strong>500 Internal Server Error:</strong> Server error occurred</li>
+                </ul>
+        </div>
+    
+    <script>
+        async function getFavicon() {
+            const urlInput = document.getElementById('url');
+            const result = document.getElementById('result');
+            const faviconDisplay = document.getElementById('favicon-display');
+            const apiUrl = document.getElementById('api-url');
+            
+            const url = urlInput.value.trim();
+            if (!url) {
+                alert('Please enter a URL');
+                return;
+            }
+            
+            result.style.display = 'none';
+            
+            try {
+                const apiEndpoint = `/api/favicon?url=${encodeURIComponent(url)}`;
+                const response = await fetch(apiEndpoint);
+                
+                if (response.ok) {
+                    const blob = await response.blob();
+                    const imageUrl = URL.createObjectURL(blob);
+                    
+                    faviconDisplay.innerHTML = `<img src="${imageUrl}" alt="Favicon">`;
+                    result.style.display = 'block';
+                } else {
+                    alert(`Error: ${response.status} - ${response.statusText}`);
+                }
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            }
+        }
+        
+        // Allow Enter key to trigger search
+        document.getElementById('url').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                getFavicon();
+            }
+        });
+    </script>
+</body>
+</html>

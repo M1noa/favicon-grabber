@@ -1,0 +1,21 @@
+name = "favicon-grabber"
+main = "worker.js"
+compatibility_date = "2025-07-13"
+compatibility_flags = ["nodejs_compat"]
+
+[env.production]
+name = "favicon-grabber"
+
+[env.staging]
+name = "favicon-grabber-staging"
+
+# Optional: Custom domain configuration
+# [[env.production.routes]]
+# pattern = "favicon.yourdomain.com/*"
+# zone_name = "yourdomain.com"
+
+# Optional: KV namespace for caching (uncomment if needed)
+# [[kv_namespaces]]
+# binding = "FAVICON_CACHE"
+# id = "your-kv-namespace-id"
+# preview_id = "your-preview-kv-namespace-id"
